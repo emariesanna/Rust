@@ -14,7 +14,7 @@ fn stats(text: &str) -> [u32; 26] {
 }
 
 fn is_pangram(counts: &[u32]) -> bool {
-    counts.iter().all(|&count| count > 0)
+    counts.iter().all(|&count| count > 0) && counts.len() == 26
 }
 
 // call this function from main
@@ -22,12 +22,22 @@ fn is_pangram(counts: &[u32]) -> bool {
 pub fn run_pangram() {
     println!("Pangram Checker");
     let args: Vec<String> = std::env::args().collect();
-    let contents = fs::read_to_string(&args[1]).expect("Failed to read file");
+    let filename;
+    if args.len() < 2 {
+        filename = "sentence.txt";
+    } else {
+        filename = &args[1];
+    }
+    let contents = fs::read_to_string(filename).expect("Failed to read file");
     let counts = stats(&contents);
     if is_pangram(&counts) {
         println!("The text is a pangram.");
     } else {
         println!("The text is not a pangram.");
+    }
+    for (i, count) in counts.iter().enumerate() {
+        let letter = (b'a' + i as u8) as char;
+        println!("{}: {}", letter, count);
     }
 }
 

@@ -29,7 +29,14 @@ const SUBS_I : &str = "àáâäæãåāăąçćčđďèéêëēėęěğǵḧîï
 const SUBS_O: &str = "aaaaaaaaaacccddeeeeeeeegghiiiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz";
 
 fn main(){
-
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() < 2 {
+        println!("Usage: {} <text>", args[0]);
+        return;
+    }
+    let text = &args[1];
+    let slug = slugify(text);
+    println!("Slug: {}", slug);
 }
 
 #[cfg(test)]
