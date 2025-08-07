@@ -1,23 +1,34 @@
 use std::fs;
 
-enum Error {
+pub enum Error {
     TooFewArguments(u8),
     CannotWriteFile,
     InvalidArgument(String),
 }
 
-fn new_board(filename: &str, arguments: &str) -> Result<(), Error> {
-    let numeri: Result<Vec<u32>, _> = arguments
+fn parse_numeri(arguments: &str) -> Result<Vec<u32>, std::num::ParseIntError> {
+    arguments
+        .split(',')
+        .map(|s| s.trim().parse::<u32>())
+        .collect()
+}
+
+
+fn nuova_board(arguments: &str){
+    let numeri: Result<_, std::num::ParseIntError> = arguments
         .split(',')
         .map(|s| s.trim().parse::<u32>())
         .collect();
-
-    let valori = match numeri {
-        Ok(valori) if valori.len() == 4 && valori.iter().all(|&n| n >= 1 && n <= 20) => {
-            println!("Stringa valida: {:?}", valori);
-            valori
-        }
-        Ok(_) | Err(_) => {
+    match numeri {
+        Ok(numeri) => {
+            if numeri.len() == 4 && numeri.iter().all(|&n| n >= 1 && n <= 20){
+                valori
+            } else {
+                Error::InvalidArgument("Invalid numbers")
+            }
+            
+        },
+        Err(numeri){
             return Err(Error::InvalidArgument(arguments.to_string()));
         }
     };
