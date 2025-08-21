@@ -17,7 +17,7 @@ impl Error {
                 Self::CannotOpenFile => "Cannot open file.",
                 Self::CannotWriteFile => "Cannot write file.",
                 Self::ParseError => "Cannot parse arguments.",
-                Self::DirectionError => "Invalid boat direction."
+                Self::DirectionError => "Invalid boat direction.",
                 Self::IncorrectArgumentsNumber => "Incorrect arguments number.",
                 Self::IncorrectArgumentsValue => "Incorrect arguments values.",
             }
@@ -117,3 +117,4 @@ fn main(){
         }
     }
 }
+
